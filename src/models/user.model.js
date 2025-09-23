@@ -64,7 +64,7 @@ userSchema.methods.isPasswordCorrect = async function (password) {
 
 // Method to generate JWT access token
 userSchema.methods.generateAccessToken = function () {
-    jwt.sign(
+    return jwt.sign(
         {
             _id: this._id,
             username: this.username,

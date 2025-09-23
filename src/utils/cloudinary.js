@@ -1,5 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import dotenv from "dotenv";
+// Load environment variables from .env file
+dotenv.config();
 
 // Configure Cloudinary with environment variables
 cloudinary.config({
@@ -18,7 +21,14 @@ const uploadToCloudinary = async (localFilePath) => {
         console.log("Cloudinary response", response.url);
         return response;
     } catch (err) {
-        fs.unlinkSync(localFilePath); // remove file from server
+        // Remove file from server only if it exists
+        try {
+            if (fs.existsSync(localFilePath)) {
+                fs.unlinkSync(localFilePath);
+            }
+        } catch (deleteErr) {
+            console.log("Error deleting local file:", deleteErr);
+        }
         console.log("Error while uploading to Cloudinary", err);
         return null;
     }
