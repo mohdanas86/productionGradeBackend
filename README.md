@@ -1,1 +1,413 @@
-# productionGradeBackend
+# Production-Grade Backend API
+
+A robust and scalable backend API built with Node.js, Express, and MongoDB. This project implements industry-standard practices for authentication, file uploads, error handling, and API design.
+
+## 🚀 Features
+
+- **User Authentication & Authorization**
+  - JWT-based authentication with access and refresh tokens
+  - Secure password hashing using bcrypt
+  - Protected routes with middleware
+  - Cookie-based token management
+
+- **File Upload Management**
+  - Multer middleware for handling multipart/form-data
+  - Cloudinary integration for cloud storage
+  - Support for avatar and cover image uploads
+  - Automatic file cleanup on upload failure
+
+- **Robust Error Handling**
+  - Custom API error classes
+  - Async handler wrapper for route handlers
+  - Consistent error response format
+  - Proper HTTP status codes
+
+- **Database Design**
+  - MongoDB with Mongoose ODM
+  - Well-structured schemas with validation
+  - Indexed fields for optimized queries
+  - Relationship modeling (User, Video, Subscription)
+
+- **Code Quality**
+  - ES6+ modern JavaScript syntax
+  - Prettier code formatting
+  - Modular architecture
+  - Clean code principles
+
+## 📋 Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [API Endpoints](#api-endpoints)
+- [Database Models](#database-models)
+- [Middleware](#middleware)
+- [Utilities](#utilities)
+- [Development](#development)
+
+## 🛠️ Tech Stack
+
+- **Runtime:** Node.js
+- **Framework:** Express.js v5.x
+- **Database:** MongoDB with Mongoose
+- **Authentication:** JWT (JSON Web Tokens)
+- **File Upload:** Multer & Cloudinary
+- **Password Hashing:** Bcrypt
+- **Environment Management:** dotenv
+- **Code Formatting:** Prettier
+- **Development:** Nodemon
+
+## 📁 Project Structure
+
+```
+productionGradeBackend/
+├── src/
+│   ├── controllers/       # Route controllers
+│   │   └── user.controllers.js
+│   ├── db/               # Database configuration
+│   │   └── index.js
+│   ├── middlewares/      # Custom middleware
+│   │   ├── auth.middleware.js
+│   │   └── multer.middleware.js
+│   ├── models/           # Mongoose models
+│   │   ├── user.model.js
+│   │   ├── video.model.js
+│   │   └── subscription.model.js
+│   ├── routes/           # API routes
+│   │   └── user.routes.js
+│   ├── utils/            # Utility functions
+│   │   ├── apiError.js
+│   │   ├── apiResponse.js
+│   │   ├── asyncHandler.js
+│   │   └── cloudinary.js
+│   ├── app.js            # Express app configuration
+│   ├── constants.js      # Application constants
+│   └── index.js          # Application entry point
+├── public/
+│   └── temp/             # Temporary file storage
+├── .env                  # Environment variables
+├── .prettierrc           # Prettier configuration
+├── package.json
+└── README.md
+```
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- MongoDB (local or Atlas)
+- Cloudinary account (for file uploads)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/mohdanas86/productionGradeBackend.git
+   cd productionGradeBackend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env` file in the root directory (see [Environment Variables](#environment-variables) section)
+
+4. **Start the development server**
+   ```bash
+   npm start
+   ```
+
+   The server will start on `http://localhost:3000` (or your specified PORT)
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Server Configuration
+PORT=3000
+NODE_ENV=development
+
+# Database
+MONGO_URL=mongodb+srv://username:password@cluster.mongodb.net
+
+# JWT Configuration
+JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRY=1d
+JWT_REFRESH_SECRET=your_jwt_refresh_secret_key
+JWT_REFRESH_EXPIRY=10d
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# CORS
+CORS_ORIGIN=*
+```
+
+**⚠️ Security Note:** Never commit your `.env` file to version control. Add it to `.gitignore`.
+
+## 🔌 API Endpoints
+
+### Base URL
+```
+http://localhost:3000/api/v1
+```
+
+### User Routes
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/user/register` | Register a new user | ❌ |
+| POST | `/user/login` | Login user | ❌ |
+| POST | `/user/logout` | Logout user | ✅ |
+| POST | `/user/refresh-token` | Refresh access token | ❌ |
+
+### API Request Examples
+
+#### 1. Register User
+```bash
+POST /api/v1/user/register
+Content-Type: multipart/form-data
+
+Fields:
+- username: string (required)
+- email: string (required)
+- password: string (required)
+- fullName: string (required)
+- avatar: file (required)
+- coverImage: file (optional)
+```
+
+#### 2. Login User
+```bash
+POST /api/v1/user/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+#### 3. Logout User
+```bash
+POST /api/v1/user/logout
+Authorization: Bearer <access_token>
+Cookie: accessToken=<token>
+```
+
+#### 4. Refresh Access Token
+```bash
+POST /api/v1/user/refresh-token
+Cookie: refreshToken=<refresh_token>
+
+OR
+
+{
+  "refreshToken": "<refresh_token>"
+}
+```
+
+## 📊 Database Models
+
+### User Model
+```javascript
+{
+  username: String (unique, indexed)
+  email: String (unique)
+  fullName: String (indexed)
+  avatar: String (Cloudinary URL)
+  coverImage: String (Cloudinary URL)
+  watchHistory: [Video ObjectId]
+  password: String (hashed)
+  refreshToken: String
+  timestamps: true
+}
+```
+
+### Video Model
+```javascript
+{
+  videoFile: String (Cloudinary URL)
+  thumbnail: String (Cloudinary URL)
+  title: String
+  description: String
+  duration: Number
+  views: Number
+  isPublished: Boolean
+  owner: User ObjectId
+}
+```
+
+### Subscription Model
+```javascript
+{
+  subscriber: User ObjectId
+  channel: User ObjectId
+  timestamps: true
+}
+```
+
+## 🛡️ Middleware
+
+### 1. Authentication Middleware (`verifyJWT`)
+Verifies JWT tokens from cookies or Authorization header. Protects routes that require authentication.
+
+**Usage:**
+```javascript
+router.post('/protected-route', verifyJWT, controller);
+```
+
+### 2. File Upload Middleware (`upload`)
+Handles file uploads using Multer with disk storage configuration.
+
+**Usage:**
+```javascript
+router.post('/upload', 
+  upload.fields([
+    { name: 'avatar', maxCount: 1 },
+    { name: 'coverImage', maxCount: 1 }
+  ]), 
+  controller
+);
+```
+
+## 🔧 Utilities
+
+### `asyncHandler`
+Wraps async route handlers to catch errors and pass them to Express error handlers.
+
+### `ApiError`
+Custom error class for consistent error handling with HTTP status codes.
+
+### `ApiResponse`
+Standardized API response format for successful requests.
+
+### `cloudinary`
+Handles file uploads to Cloudinary cloud storage with automatic cleanup.
+
+## 💻 Development
+
+### Available Scripts
+
+```bash
+# Start development server with nodemon
+npm start
+
+# Format code with Prettier
+npm run format
+
+# Check code formatting
+npm run lint
+```
+
+### Code Formatting
+
+This project uses Prettier for code formatting. Configuration is in `.prettierrc`:
+
+```json
+{
+  "singleQuote": true,
+  "semi": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "endOfLine": "lf"
+}
+```
+
+Run `npm run format` before committing code.
+
+## 🏗️ Architecture Patterns
+
+### MVC Pattern
+- **Models:** Database schemas and business logic
+- **Views:** JSON responses (API)
+- **Controllers:** Request handling and response logic
+
+### Middleware Pattern
+- Authentication and authorization
+- Error handling
+- File upload processing
+
+### Repository Pattern
+- Database operations abstracted through Mongoose models
+- Reusable query methods
+
+## 🔒 Security Features
+
+- **Password Security:** Bcrypt hashing with salt rounds
+- **JWT Authentication:** Separate access and refresh tokens
+- **HTTP-only Cookies:** Secure token storage
+- **CORS Configuration:** Controlled cross-origin access
+- **Input Validation:** Schema-level validation with Mongoose
+- **Error Sanitization:** No sensitive data in error responses
+
+## 📝 Best Practices Implemented
+
+- ✅ Environment-based configuration
+- ✅ Modular code organization
+- ✅ Async/await error handling
+- ✅ Database connection management
+- ✅ Token refresh mechanism
+- ✅ File upload validation
+- ✅ Consistent API responses
+- ✅ Code formatting standards
+- ✅ Separation of concerns
+
+## 🚀 Deployment Considerations
+
+### Pre-deployment Checklist
+- [ ] Set `NODE_ENV=production`
+- [ ] Use strong JWT secrets
+- [ ] Configure CORS for production domain
+- [ ] Set up MongoDB Atlas with IP whitelist
+- [ ] Configure Cloudinary production environment
+- [ ] Enable HTTPS
+- [ ] Set up logging and monitoring
+- [ ] Configure rate limiting
+- [ ] Add input sanitization
+- [ ] Set up error tracking (e.g., Sentry)
+
+### Recommended Platforms
+- **Backend:** Heroku, Railway, DigitalOcean, AWS EC2
+- **Database:** MongoDB Atlas
+- **File Storage:** Cloudinary
+- **Environment Variables:** Platform-specific secret management
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the ISC License.
+
+## 👤 Author
+
+**Mohd Anas**
+- GitHub: [@mohdanas86](https://github.com/mohdanas86)
+
+## 🙏 Acknowledgments
+
+- Express.js team for the excellent framework
+- MongoDB team for the robust database
+- Cloudinary for seamless file management
+- All open-source contributors
+
+---
+
+**Note:** This is a production-grade backend starter template. Customize it according to your specific requirements.
+
+For issues and feature requests, please open an issue on GitHub.
