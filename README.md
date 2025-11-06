@@ -321,11 +321,11 @@ Handles file uploads to Cloudinary cloud storage with automatic cleanup.
 # Start development server with nodemon
 npm start
 
-# Format code with Prettier
+# Format code with Prettier (auto-fix)
 npm run format
 
-# Check code formatting
-npm run lint
+# Check code formatting (CI/CD)
+npm run format:check
 ```
 
 ### Code Formatting
@@ -343,7 +343,26 @@ This project uses Prettier for code formatting. Configuration is in `.prettierrc
 }
 ```
 
-Run `npm run format` before committing code.
+**Before committing:**
+```bash
+npm run format
+```
+
+This ensures your code passes the CI formatting checks.
+
+### Continuous Integration
+
+This project uses GitHub Actions for automated code quality checks:
+
+- ✅ **Prettier Formatting** - Ensures code style consistency
+- ✅ **Dependency Installation** - Validates package integrity
+- ✅ **Node.js 20.x** - Tests against production Node version
+
+The CI pipeline runs automatically on:
+- Every push to `main` branch
+- Every pull request to `main` branch
+
+**View workflow status:** [Actions tab](https://github.com/mohdanas86/productionGradeBackend/actions)
 
 ## 🏗️ Architecture Patterns
 
