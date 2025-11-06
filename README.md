@@ -103,21 +103,24 @@ productionGradeBackend/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/mohdanas86/productionGradeBackend.git
    cd productionGradeBackend
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
-   
+
    Create a `.env` file in the root directory (see [Environment Variables](#environment-variables) section)
 
 4. **Start the development server**
+
    ```bash
    npm start
    ```
@@ -156,22 +159,24 @@ CORS_ORIGIN=*
 ## 🔌 API Endpoints
 
 ### Base URL
+
 ```
 http://localhost:3000/api/v1
 ```
 
 ### User Routes
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/user/register` | Register a new user | ❌ |
-| POST | `/user/login` | Login user | ❌ |
-| POST | `/user/logout` | Logout user | ✅ |
-| POST | `/user/refresh-token` | Refresh access token | ❌ |
+| Method | Endpoint              | Description          | Auth Required |
+| ------ | --------------------- | -------------------- | ------------- |
+| POST   | `/user/register`      | Register a new user  | ❌            |
+| POST   | `/user/login`         | Login user           | ❌            |
+| POST   | `/user/logout`        | Logout user          | ✅            |
+| POST   | `/user/refresh-token` | Refresh access token | ❌            |
 
 ### API Request Examples
 
 #### 1. Register User
+
 ```bash
 POST /api/v1/user/register
 Content-Type: multipart/form-data
@@ -186,6 +191,7 @@ Fields:
 ```
 
 #### 2. Login User
+
 ```bash
 POST /api/v1/user/login
 Content-Type: application/json
@@ -197,6 +203,7 @@ Content-Type: application/json
 ```
 
 #### 3. Logout User
+
 ```bash
 POST /api/v1/user/logout
 Authorization: Bearer <access_token>
@@ -204,6 +211,7 @@ Cookie: accessToken=<token>
 ```
 
 #### 4. Refresh Access Token
+
 ```bash
 POST /api/v1/user/refresh-token
 Cookie: refreshToken=<refresh_token>
@@ -218,6 +226,7 @@ OR
 ## 📊 Database Models
 
 ### User Model
+
 ```javascript
 {
   username: String (unique, indexed)
@@ -233,6 +242,7 @@ OR
 ```
 
 ### Video Model
+
 ```javascript
 {
   videoFile: String (Cloudinary URL)
@@ -247,6 +257,7 @@ OR
 ```
 
 ### Subscription Model
+
 ```javascript
 {
   subscriber: User ObjectId
@@ -258,23 +269,28 @@ OR
 ## 🛡️ Middleware
 
 ### 1. Authentication Middleware (`verifyJWT`)
+
 Verifies JWT tokens from cookies or Authorization header. Protects routes that require authentication.
 
 **Usage:**
+
 ```javascript
 router.post('/protected-route', verifyJWT, controller);
 ```
 
 ### 2. File Upload Middleware (`upload`)
+
 Handles file uploads using Multer with disk storage configuration.
 
 **Usage:**
+
 ```javascript
-router.post('/upload', 
+router.post(
+  '/upload',
   upload.fields([
     { name: 'avatar', maxCount: 1 },
-    { name: 'coverImage', maxCount: 1 }
-  ]), 
+    { name: 'coverImage', maxCount: 1 },
+  ]),
   controller
 );
 ```
@@ -282,15 +298,19 @@ router.post('/upload',
 ## 🔧 Utilities
 
 ### `asyncHandler`
+
 Wraps async route handlers to catch errors and pass them to Express error handlers.
 
 ### `ApiError`
+
 Custom error class for consistent error handling with HTTP status codes.
 
 ### `ApiResponse`
+
 Standardized API response format for successful requests.
 
 ### `cloudinary`
+
 Handles file uploads to Cloudinary cloud storage with automatic cleanup.
 
 ## 💻 Development
@@ -328,16 +348,19 @@ Run `npm run format` before committing code.
 ## 🏗️ Architecture Patterns
 
 ### MVC Pattern
+
 - **Models:** Database schemas and business logic
 - **Views:** JSON responses (API)
 - **Controllers:** Request handling and response logic
 
 ### Middleware Pattern
+
 - Authentication and authorization
 - Error handling
 - File upload processing
 
 ### Repository Pattern
+
 - Database operations abstracted through Mongoose models
 - Reusable query methods
 
@@ -365,6 +388,7 @@ Run `npm run format` before committing code.
 ## 🚀 Deployment Considerations
 
 ### Pre-deployment Checklist
+
 - [ ] Set `NODE_ENV=production`
 - [ ] Use strong JWT secrets
 - [ ] Configure CORS for production domain
@@ -377,6 +401,7 @@ Run `npm run format` before committing code.
 - [ ] Set up error tracking (e.g., Sentry)
 
 ### Recommended Platforms
+
 - **Backend:** Heroku, Railway, DigitalOcean, AWS EC2
 - **Database:** MongoDB Atlas
 - **File Storage:** Cloudinary
@@ -397,6 +422,7 @@ This project is licensed under the ISC License.
 ## 👤 Author
 
 **Mohd Anas**
+
 - GitHub: [@mohdanas86](https://github.com/mohdanas86)
 
 ## 🙏 Acknowledgments
