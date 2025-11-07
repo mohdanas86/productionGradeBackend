@@ -404,7 +404,102 @@ The CI pipeline runs automatically on:
 - ✅ Code formatting standards
 - ✅ Separation of concerns
 
-## 🚀 Deployment Considerations
+## Docker Deployment
+
+This project includes Docker support for easy containerization and deployment.
+
+### Prerequisites
+
+- Docker installed on your system
+- Docker Compose (optional, for multi-container setups)
+
+### Quick Start with Docker
+
+```bash
+# Clone the repository
+git clone https://github.com/mohdanas86/productionGradeBackend.git
+cd productionGradeBackend
+
+# Build the Docker image
+docker build -t production-backend .
+
+# Run the container
+docker run -p 3000:3000 production-backend
+```
+
+The application will be available at `http://localhost:3000`
+
+### Docker Commands
+
+```bash
+# Build the image
+docker build -t production-backend .
+
+# Run in detached mode (background)
+docker run -d -p 3000:3000 --name backend-container production-backend
+
+# View logs
+docker logs backend-container
+
+# Stop the container
+docker stop backend-container
+
+# Remove the container
+docker rm backend-container
+
+# Remove the image
+docker rmi production-backend
+```
+
+### Environment Variables in Docker
+
+Create a `.env` file in your project root before building:
+
+```env
+PORT=3000
+NODE_ENV=production
+MONGO_URL=mongodb://host.docker.internal:27017/production
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRY=1d
+JWT_REFRESH_SECRET=your_refresh_secret
+JWT_REFRESH_EXPIRY=10d
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+CORS_ORIGIN=*
+```
+
+### Docker Image Details
+
+- **Base Image:** `node:20-alpine` (lightweight Node.js image)
+- **Working Directory:** `/src/app`
+- **Exposed Port:** 3000
+- **Production Optimized:** Only production dependencies installed
+- **File Uploads:** Temporary directory created automatically
+
+### Troubleshooting Docker Issues
+
+**Port already in use:**
+```bash
+# Use a different port
+docker run -p 8000:3000 production-backend
+```
+
+**Environment variables not loading:**
+```bash
+# Ensure .env file exists in the build context
+ls -la .env
+```
+
+**Container exits immediately:**
+```bash
+# Check logs for errors
+docker logs <container-name>
+```
+
+For detailed Docker documentation, see [`docs/DOCKER_DEPLOYMENT.md`](docs/DOCKER_DEPLOYMENT.md)
+
+## �🚀 Deployment Considerations
 
 ### Pre-deployment Checklist
 
