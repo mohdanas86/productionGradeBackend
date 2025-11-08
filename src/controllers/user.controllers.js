@@ -107,12 +107,14 @@ const loginUser = asyncHandler(async (req, res, next) => {
   if (!user) {
     throw new ApiError(404, 'User not found');
   }
+
   // password check
   const isPasswordValid = await user.isPasswordCorrect(password);
 
   if (!isPasswordValid) {
     throw new ApiError(401, 'Invalid password');
   }
+
   // access token and refresh token
   const { accessToken, refreshToken } =
     await generateAccessTokenAndRefreshToken(user._id);
