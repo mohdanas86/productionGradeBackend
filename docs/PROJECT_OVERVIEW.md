@@ -1,13 +1,13 @@
-# 📋 Project Overview - Simple Explanation
+# Project Overview - Simple Explanation
 
 ---
 
-## 📌 Project Name
+## Project Name
 **Production Grade Backend API**
 
 ---
 
-## ❓ What is This Project?
+## What is This Project?
 
 This is a backend server application (like the engine of a car) that handles:
 - User accounts (signup, login, logout)
@@ -17,7 +17,7 @@ This is a backend server application (like the engine of a car) that handles:
 
 ---
 
-## 🎯 Why Was This Built?
+## Why Was This Built?
 
 - To create a professional-grade backend that can be used for real applications
 - To follow industry best practices
@@ -26,33 +26,33 @@ This is a backend server application (like the engine of a car) that handles:
 
 ---
 
-## 🚀 Main Features (What It Can Do)
+## Main Features (What It Can Do)
 
-### 1. 👥 User Management
+### 1. User Management
 - Users can create accounts (register)
 - Users can login with email and password
 - Users can logout securely
 - Passwords are encrypted (nobody can see the actual password)
 - Profile pictures and cover images can be uploaded
 
-### 2. 🔒 Security
+### 2. Security
 - Uses JWT tokens (like digital keys) to verify users
 - Two types of tokens: access token (short-lived) and refresh token (long-lived)
 - Passwords are hashed using bcrypt (impossible to reverse)
 - Protected routes (some pages only logged-in users can access)
 
-### 3. 📁 File Uploads
+### 3. File Uploads
 - Users can upload images
 - Files are stored on Cloudinary (cloud storage)
 - Temporary files are automatically cleaned up
 - Supports avatar and cover image uploads
 
-### 4. ⚠️ Error Handling
+### 4. Error Handling
 - If something goes wrong, users get clear error messages
 - Errors are caught and handled properly
 - No server crashes on errors
 
-### 5. 💻 Code Quality
+### 5. Code Quality
 - Code is automatically formatted (looks clean and consistent)
 - Uses modern JavaScript features
 - Well-organized folder structure
@@ -60,7 +60,7 @@ This is a backend server application (like the engine of a car) that handles:
 
 ---
 
-## 🛠️ Technologies Used (Tools & Libraries)
+## Technologies Used (Tools & Libraries)
 
 | Technology | Purpose |
 |------------|---------|
@@ -77,29 +77,29 @@ This is a backend server application (like the engine of a car) that handles:
 
 ---
 
-## 🔄 How It Works (Simple Flow)
+## How It Works (Simple Flow)
 
-### 1. 📝 User Registration
+### 1. User Registration
 ```
 User fills form → Server receives data → Validates data →
 Uploads images to cloud → Hashes password → Saves to database →
 Returns success message
 ```
 
-### 2. 🔑 User Login
+### 2. User Login
 ```
 User enters email/password → Server checks database →
 Verifies password → Creates JWT tokens →
 Sends tokens in cookies → User is logged in
 ```
 
-### 3. 🛡️ Accessing Protected Routes
+### 3. Accessing Protected Routes
 ```
 User makes request → Server checks token →
 Verifies token is valid → Allows access OR denies access
 ```
 
-### 4. 📤 File Upload
+### 4. File Upload
 ```
 User selects file → Multer saves temporarily →
 Cloudinary uploads to cloud → Returns URL →
@@ -108,7 +108,7 @@ URL saved in database → Temporary file deleted
 
 ---
 
-## 📂 Folder Structure Explained
+## Folder Structure Explained
 
 ```
 src/
@@ -128,30 +128,30 @@ package.json      → Project information and dependencies
 
 ---
 
-## 🧠 Key Concepts for Beginners
+## Key Concepts for Beginners
 
-### 📡 API (Application Programming Interface)
+### API (Application Programming Interface)
 A way for frontend (website) to talk to backend (server)
 
-### 🌐 REST API
+### REST API
 A standard way of designing APIs using HTTP methods (GET, POST, etc.)
 
-### 🔧 Middleware
+### Middleware
 Functions that run between receiving a request and sending a response
 
-### 🎫 JWT (JSON Web Token)
+### JWT (JSON Web Token)
 A secure way to verify user identity without storing sessions
 
-### 🔐 Hashing
+### Hashing
 One-way encryption (can't be reversed, keeps passwords safe)
 
-### 🌍 Environment Variables
+### Environment Variables
 Secret information stored outside code (passwords, API keys)
 
-### 📋 Schema
+### Schema
 Blueprint of how data should look in database
 
-### 🏗️ MVC Pattern (Model-View-Controller)
+### MVC Pattern (Model-View-Controller)
 A way to organize code:
 - **Model**: Database structure
 - **View**: What user sees (JSON responses in APIs)
@@ -159,7 +159,7 @@ A way to organize code:
 
 ---
 
-## ⭐ What Makes It "Production-Grade"?
+## What Makes It "Production-Grade"?
 
 - ✅ Secure authentication with JWT
 - ✅ Password hashing (bcrypt)
@@ -174,18 +174,18 @@ A way to organize code:
 
 ---
 
-## 👥 Who Can Use This Project?
+## Who Can Use This Project?
 
-1. **👶 Beginners** → Learn how professional backends are built
-2. **🎓 Students** → Use as reference for projects
-3. **💻 Developers** → Use as starter template for new projects
-4. **🏢 Companies** → Foundation for building production applications
+1. **Beginners** → Learn how professional backends are built
+2. **Students** → Use as reference for projects
+3. **Developers** → Use as starter template for new projects
+4. **Companies** → Foundation for building production applications
 
 ---
 
-## 📖 How to Use This Project
+## How to Use This Project
 
-### Step 1: 🚀 Install
+### Step 1: Install
 ```bash
 # Clone the repository from GitHub
 git clone https://github.com/mohdanas86/productionGradeBackend.git
@@ -195,13 +195,13 @@ cd productionGradeBackend
 npm install
 ```
 
-### Step 2: ⚙️ Configure
+### Step 2: Configure
 ```bash
 # Create .env file
 # Add database connection, JWT secrets, Cloudinary keys
 ```
 
-### Step 3: ▶️ Run
+### Step 3: Run
 ```bash
 # Start the server
 npm start
@@ -209,7 +209,7 @@ npm start
 # Server starts on http://localhost:3000
 ```
 
-### Step 4: 🧪 Test
+### Step 4: Test
 ```bash
 # Use Postman or Thunder Client
 # Test registration, login, logout endpoints
@@ -217,7 +217,7 @@ npm start
 
 ---
 
-## 💡 Common Use Cases
+## Common Use Cases
 
 - Building a social media platform
 - Creating a video sharing website
@@ -228,7 +228,7 @@ npm start
 
 ---
 
-## 🚀 Future Enhancements (What Can Be Added)
+## Future Enhancements (What Can Be Added)
 
 - ☐ Email verification
 - ☐ Forgot password functionality
@@ -246,7 +246,7 @@ npm start
 
 ---
 
-## 📚 Learning Path
+## Learning Path
 
 If you're new to backend development, learn in this order:
 
@@ -263,7 +263,7 @@ If you're new to backend development, learn in this order:
 
 ---
 
-## 💻 Useful Commands
+## Useful Commands
 
 ```bash
 npm start              # Start the server
@@ -276,7 +276,7 @@ git push               # Upload code to GitHub
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Problems & Solutions
 
@@ -290,7 +290,7 @@ git push               # Upload code to GitHub
 
 ---
 
-## 📄 Important Files
+## Important Files
 
 | File | Purpose |
 |------|---------|
@@ -302,7 +302,7 @@ git push               # Upload code to GitHub
 
 ---
 
-## 📞 Contact & Support
+## Contact & Support
 
 - **GitHub**: [@mohdanas86](https://github.com/mohdanas86)
 - **Repository**: [github.com/mohdanas86/productionGradeBackend](https://github.com/mohdanas86/productionGradeBackend)
@@ -310,7 +310,7 @@ git push               # Upload code to GitHub
 
 ---
 
-## 🎉 Final Thoughts
+## Final Thoughts
 
 This project is designed to be:
 - **Easy to understand**
@@ -321,7 +321,7 @@ This project is designed to be:
 
 Whether you're a beginner learning or an experienced developer building, this codebase provides a solid foundation for modern backend development.
 
-**Happy Coding!** 🚀
+**Happy Coding!**
 
 ---
 
