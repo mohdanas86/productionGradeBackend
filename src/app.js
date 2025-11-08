@@ -42,4 +42,22 @@ app.get('/', (req, res) => {
   }
 });
 
+// api health
+app.get('/v1/api/health', (req, res) => {
+  try {
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { status: 'OK', timestamp: new Date(), message: 'API is healthy' },
+          'API is healthy'
+        )
+      );
+  } catch (error) {
+    console.error('Error in health check route:', error);
+    return res.status(500).json(new ApiError(500, 'Internal Server Error'));
+  }
+});
+
 export { app };
