@@ -4,6 +4,10 @@ import http from 'http';
 import { app } from './app.js';
 import dotenv from 'dotenv';
 import databaseconnection from './db/index.js';
+import { apiRateLimit } from './middlewares/ratelimit.middleware.js';
+
+// Apply general rate limit to all API routes
+app.use('/api', apiRateLimit);
 
 // database connection
 databaseconnection()
