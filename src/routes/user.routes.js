@@ -7,12 +7,13 @@ import {
   logoutUser,
   refreshAccessToken,
 } from '../controllers/user.controllers.js';
+import { authRateLimit } from '../middlewares/ratelimit.middleware.js';
 
 // Create a router instance
 const userRouter = Router();
 
 // Route for user registration
-userRouter.route('/register').post(
+userRouter.route('/register', authRateLimit).post(
   upload.fields([
     {
       name: 'avatar',
@@ -27,7 +28,7 @@ userRouter.route('/register').post(
 );
 
 // Route for user login
-userRouter.route('/login').post(loginUser);
+userRouter.route('/login', authRateLimit).post(loginUser);
 
 // ======================================================================
 // secured route only for logged in users
