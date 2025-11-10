@@ -12,7 +12,9 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
     const refreshToken = user.generateRefreshToken();
 
     user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
+    await user.save({
+      validateBeforeSave: false,
+    });
 
     return { accessToken, refreshToken };
   } catch (err) {
@@ -212,7 +214,10 @@ const refreshAccessToken = asyncHandler(async (req, res, next) => {
       .json(
         new ApiResponse(
           200,
-          { accessToken, refreshToken: newRefreshToken },
+          {
+            accessToken,
+            refreshToken: newRefreshToken,
+          },
           'Access token generated successfully'
         )
       );
@@ -236,7 +241,9 @@ const changeCurrentPassword = asyncHandler(async (req, res, next) => {
   }
 
   user.password = newPassword;
-  await user.save({ validateBeforeSave: false });
+  await user.save({
+    validateBeforeSave: false,
+  });
 
   return res
     .status(200)

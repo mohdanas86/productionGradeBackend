@@ -1,6 +1,9 @@
 import rateLimit from 'express-rate-limit';
 import {
     APIRATELIMIT_15MIN,
+    AUTHRATELIMIT_30MIN,
+    FILEUPLOADRATELIMIT_30MIN,
+    HEALTHCHECKRATELIMIT_30MIN,
 } from '../constants.js';
 
 // general Api rate limit (100 requests per 15 minutes)
@@ -57,3 +60,5 @@ export const healthCheckRateLimit = rateLimit({
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
+
+

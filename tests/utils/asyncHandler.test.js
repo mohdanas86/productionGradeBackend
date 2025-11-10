@@ -12,7 +12,9 @@ describe('asyncHandler', () => {
 
     await handler(mockReq, mockRes, mockNext);
 
-    expect(mockRes.json).toHaveBeenCalledWith({ success: true });
+    expect(mockRes.json).toHaveBeenCalledWith({
+      success: true,
+    });
     expect(mockNext).not.toHaveBeenCalled();
   });
 
