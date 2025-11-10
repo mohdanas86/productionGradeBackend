@@ -15,3 +15,17 @@ export const apiRateLimit = rateLimit({
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
+
+// stricter rate limit for authentication routes (5 requests per minute)
+export const authRateLimit = rateLimit({
+    windowMs: AUTHRATELIMIT_30MIN, // 30 minutes
+    max: 5, // limit each IP to 5 requests per windowMs
+    message: {
+        success: false,
+        statusCode: 429,
+        message:
+            'Too many login attempts from this IP, please try again after 30 minutes.',
+    },
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
