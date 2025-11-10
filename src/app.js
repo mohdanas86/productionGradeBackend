@@ -11,7 +11,12 @@ app.use(
   })
 );
 app.use(express.json({ limit: '16Kb' }));
-app.use(express.urlencoded({ extended: true, limit: '16Kb' }));
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: '16Kb',
+  })
+);
 app.use(express.static('public'));
 app.use(cookieParser());
 
@@ -19,6 +24,7 @@ app.use(cookieParser());
 import userRouter from './routes/user.routes.js';
 import { ApiError } from './utils/apiError.js';
 import { ApiResponse } from './utils/apiResponse.js';
+import { healthCheckRateLimit } from './middlewares/ratelimit.middleware.js';
 
 // Use routes
 app.use('/api/v1/user', userRouter);
@@ -43,17 +49,19 @@ app.get('/', (req, res) => {
 });
 
 // api health
-app.get('/v1/api/health', (req, res) => {
+app.get('/v1/api/health', healthCheckRateLimit, (req, res) => {
   try {
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          { status: 'OK', timestamp: new Date(), message: 'API is healthy' },
-          'API is healthy'
-        )
-      );
+    return res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          status: 'OK',
+          timestamp: new Date(),
+          message: 'API is healthy',
+        },
+        'API is healthy'
+      )
+    );
   } catch (error) {
     console.error('Error in health check route:', error);
     return res.status(500).json(new ApiError(500, 'Internal Server Error'));
