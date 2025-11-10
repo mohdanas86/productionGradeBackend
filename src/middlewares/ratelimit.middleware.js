@@ -29,3 +29,17 @@ export const authRateLimit = rateLimit({
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
+
+// file upload rate  limit (20 requests per 15 minutes)
+export const fileUploadRateLimit = rateLimit({
+    windowMs: FILEUPLOADRATELIMIT_30MIN, // 30 minutes
+    max: 10, // limit each IP to 10 requests per windowMs
+    message: {
+        success: false,
+        statusCode: 429,
+        message:
+            'Too many file upload requests from this IP, please try again after 30 minutes.',
+    },
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
