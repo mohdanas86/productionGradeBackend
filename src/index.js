@@ -1,8 +1,8 @@
+import dotenv from 'dotenv';
 dotenv.config();
 
 import http from 'http';
 import { app } from './app.js';
-import dotenv from 'dotenv';
 import databaseconnection from './db/index.js';
 import { apiRateLimit } from './middlewares/ratelimit.middleware.js';
 
