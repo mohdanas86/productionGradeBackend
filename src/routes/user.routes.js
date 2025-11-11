@@ -13,7 +13,8 @@ import { authRateLimit } from '../middlewares/ratelimit.middleware.js';
 const userRouter = Router();
 
 // Route for user registration
-userRouter.route('/register', authRateLimit).post(
+userRouter.route('/register').post(
+  authRateLimit,
   upload.fields([
     {
       name: 'avatar',
@@ -28,7 +29,7 @@ userRouter.route('/register', authRateLimit).post(
 );
 
 // Route for user login
-userRouter.route('/login', authRateLimit).post(loginUser);
+userRouter.route('/login').post(authRateLimit, loginUser);
 
 // ======================================================================
 // secured route only for logged in users

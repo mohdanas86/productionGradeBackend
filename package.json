@@ -1,7 +1,7 @@
 {
   "name": "productiongradebackend",
   "version": "1.0.0",
-  "description": "",
+  "description": "production grade backend template using nodejs, express and mongodb",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -13,12 +13,11 @@
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage"
   },
-  "author": "",
+  "author": "Anas Alam",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.7.0",
-    "cookie-parse": "^0.4.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",

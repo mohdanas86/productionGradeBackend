@@ -70,7 +70,6 @@ userSchema.methods.generateAccessToken = function () {
       username: this.username,
       fullName: this.fullName,
       email: this.email,
-      password: this.password,
     },
     process.env.JWT_SECRET,
     {
