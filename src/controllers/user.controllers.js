@@ -3,8 +3,9 @@ import { ApiError } from '../utils/apiError.js';
 import { ApiResponse } from '../utils/apiResponse.js';
 import { User } from '../models/user.model.js';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
+import jwt from 'jsonwebtoken';
 
-// genarate access token and refresh token
+// generate access token and refresh token
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId);
@@ -20,7 +21,7 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
   } catch (err) {
     throw new ApiError(
       500,
-      'Somthing went wrong while generating refresh and access token'
+      'Something went wrong while generating refresh and access token'
     );
   }
 };
@@ -96,7 +97,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
   // req body -> data
   const { username, email, password } = req.body;
 
-  // verify if username or email esists
+  // verify if username or email exists
   if (!username && !email) {
     throw new ApiError(400, 'Username or email is required');
   }
@@ -223,7 +224,7 @@ const refreshAccessToken = asyncHandler(async (req, res, next) => {
       );
   } catch (err) {
     throw new ApiError(
-      4011,
+      401,
       err?.message || 'Could not refresh access token, please login again'
     );
   }
@@ -265,7 +266,7 @@ const updateUserDetails = asyncHandler(async (req, res, next) => {
     throw new ApiError(400, 'At least one field is required to update');
   }
 
-  User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {
@@ -300,7 +301,7 @@ const updateAvatarImage = asyncHandler(async (req, res) => {
     );
   }
 
-  const updateUser = await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {
@@ -315,7 +316,7 @@ const updateAvatarImage = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(200, updateUser, 'Avatar image updated successfully')
+      new ApiResponse(200, updatedUser, 'Avatar image updated successfully')
     );
 });
 
@@ -336,7 +337,7 @@ const updateCoverImage = asyncHandler(async (req, res) => {
     );
   }
 
-  const updateUser = await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {
@@ -350,7 +351,9 @@ const updateCoverImage = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, updateUser, 'Cover image updated successfully'));
+    .json(
+      new ApiResponse(200, updatedUser, 'Cover image updated successfully')
+    );
 });
 
 export {
