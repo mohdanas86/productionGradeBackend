@@ -6,8 +6,10 @@ import {
   loginUser,
   logoutUser,
   refreshAccessToken,
+  getCurrentUser,
 } from '../controllers/user.controllers.js';
 import { authRateLimit } from '../middlewares/ratelimit.middleware.js';
+import { catchAsync } from '../middlewares/catch.middleware.js';
 
 // Create a router instance
 const userRouter = Router();
@@ -40,6 +42,9 @@ userRouter.route('/logout').post(verifyJWT, logoutUser);
 
 // Route for refreshing access token
 userRouter.route('/refresh-token').post(refreshAccessToken);
+
+// Route for getting user profile
+userRouter.route('/me').get(catchAsync(300), verifyJWT, getCurrentUser);
 
 // Export the router to be used in the main application
 export default userRouter;

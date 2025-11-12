@@ -1,0 +1,47 @@
+services:
+  app:
+    build: . # Uses your Dockerfile to build the image
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/productiongradebackend
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      # Add your other env vars here
+    depends_on:
+      - mongodb
+      - redis
+    volumes:
+      - ./public/temp:/src/app/public/temp # Mount upload directory
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=productiongradebackend
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  app-network:
+    driver: bridge
