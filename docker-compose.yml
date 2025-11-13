@@ -9,7 +9,13 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/productiongradebackend
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      # Add your other env vars here
+      - JWT_SECRET=your_jwt_secret_here
+      - JWT_EXPIRY=1d
+      - JWT_REFRESH_SECRET=your_jwt_refresh_secret_here
+      - JWT_REFRESH_EXPIRY=10d
+      - CLOUDINARY_CLOUD_NAME=dxjiwyxqb
+      - CLOUDINARY_API_KEY=618453851717393
+      - CLOUDINARY_API_SECRET=7mMvjGOKfaHJ5sVAHLVDovSshAc
     depends_on:
       - mongodb
       - redis
