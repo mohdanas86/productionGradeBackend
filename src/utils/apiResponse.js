@@ -2,9 +2,9 @@
  * apiResponse is a utility to standardize API responses.
  * It ensures a consistent structure for successful and error responses.
  *
- * @param {Object} res - The Express response object
+ * @param {number} statusCode - The HTTP status code for the response
  * @param {Object} data - The data to include in the response
- * @param {number} [statusCode=200] - The HTTP status code for the response
+ * @param {string} [message='Success'] - The response message
  */
 class ApiResponse {
   constructor(statusCode, data, message = 'Success') {
