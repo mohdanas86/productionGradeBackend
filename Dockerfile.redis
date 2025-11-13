@@ -1,0 +1,12 @@
+FROM redis:7-alpine
+
+RUN mkdir -p /data
+
+WORKDIR /data
+
+EXPOSE 6379
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s \
+  CMD redis-cli ping || exit 1
+
+CMD ["redis-server"]

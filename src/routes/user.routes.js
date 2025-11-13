@@ -6,10 +6,14 @@ import {
   loginUser,
   logoutUser,
   refreshAccessToken,
+  changeCurrentPassword,
   getCurrentUser,
+  updateUserDetails,
+  updateAvatarImage,
+  updateCoverImage,
 } from '../controllers/user.controllers.js';
 import { authRateLimit } from '../middlewares/ratelimit.middleware.js';
-import { catchAsync } from '../middlewares/catch.middleware.js';
+import { cache } from '../middlewares/cache.middleware.js';
 
 // Create a router instance
 const userRouter = Router();
@@ -40,11 +44,24 @@ userRouter.route('/login').post(authRateLimit, loginUser);
 // Route for user logout
 userRouter.route('/logout').post(verifyJWT, logoutUser);
 
-// Route for refreshing access token
 userRouter.route('/refresh-token').post(refreshAccessToken);
 
 // Route for getting user profile
-userRouter.route('/me').get(catchAsync(300), verifyJWT, getCurrentUser);
+userRouter.route('/me').get(cache(300), verifyJWT, getCurrentUser);
 
-// Export the router to be used in the main application
+// Route for changing password
+userRouter.route('/change-password').post(verifyJWT, changeCurrentPassword);
+
+// Route for updating user account details
+userRouter.route('/update-account').patch(verifyJWT, updateUserDetails);
+
+// Route for updating user avatar
+userRouter
+  .route('/avatar')
+  .patch(verifyJWT, upload.single('avatar'), updateAvatarImage);
+
+// Route for updating user cover image
+userRouter
+  .route('/cover-image')
+  .patch(verifyJWT, upload.single('coverImage'), updateCoverImage);
 export default userRouter;

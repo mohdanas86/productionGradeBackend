@@ -20,5 +20,4 @@ RUN mkdir -p public/temp
 EXPOSE 3000
 
 # Command to run the application
-# CMD ["node", "src/index.js"]
-CMD ["npx", "nodemon", "src/index.js"]
+CMD ["node", "src/index.js"]
