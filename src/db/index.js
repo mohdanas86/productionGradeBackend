@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { DATABASE_NAME } from '../constants.js';
 
-const databaseconnection = async () => {
+const databaseConnection = async () => {
   try {
     const uri = `${process.env.MONGODB_URI}/${DATABASE_NAME}`;
 
@@ -13,4 +13,4 @@ const databaseconnection = async () => {
   }
 };
 
-export default databaseconnection;
+export default databaseConnection;

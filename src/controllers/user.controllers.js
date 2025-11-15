@@ -6,6 +6,11 @@ import { uploadToCloudinary } from '../utils/cloudinary.js';
 import jwt from 'jsonwebtoken';
 
 // generate access token and refresh token
+/**
+ * Generates access and refresh tokens for a user.
+ * @param {string} userId - The ID of the user.
+ * @returns {Promise<{accessToken: string, refreshToken: string}>} - The generated tokens.
+ */
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId);
@@ -41,10 +46,10 @@ const registerUser = asyncHandler(async (req, res, next) => {
   }
 
   // Check if user already exists (by email or username)
-  const existingUser = await User.find({
+  const existingUser = await User.findOne({
     $or: [{ email }, { username }],
   });
-  if (existingUser.length > 0) {
+  if (existingUser) {
     throw new ApiError(409, 'User already exists');
   }
 
@@ -202,7 +207,7 @@ const refreshAccessToken = asyncHandler(async (req, res, next) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
     };
 
     const { accessToken, refreshToken } =
@@ -264,6 +269,17 @@ const updateUserDetails = asyncHandler(async (req, res, next) => {
 
   if (!fullName && !email) {
     throw new ApiError(400, 'At least one field is required to update');
+  }
+
+  // Check if email is being updated and if it's unique
+  if (email) {
+    const existingUser = await User.findOne({ email });
+    if (
+      existingUser &&
+      existingUser._id.toString() !== req.user._id.toString()
+    ) {
+      throw new ApiError(409, 'Email already exists');
+    }
   }
 
   const updatedUser = await User.findByIdAndUpdate(

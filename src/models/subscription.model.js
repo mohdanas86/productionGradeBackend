@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // Define the subscription schema
-const subscriptionModel = new mongoose.Schema(
+const subscriptionSchema = new mongoose.Schema(
   {
     subscriber: {
       type: mongoose.Schema.Types.ObjectId,
@@ -16,4 +16,4 @@ const subscriptionModel = new mongoose.Schema(
 );
 
 // Export the subscription model
-export default mongoose.model('Subscription', subscriptionModel);
+export default mongoose.model('Subscription', subscriptionSchema);
