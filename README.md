@@ -137,7 +137,7 @@ PORT=3000
 NODE_ENV=development
 
 # Database
-MONGO_URL=mongodb+srv://username:password@cluster.mongodb.net
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net
 
 # JWT Configuration
 JWT_SECRET=your_jwt_secret_key
@@ -499,7 +499,7 @@ docker logs <container-name>
 
 For detailed Docker documentation, see [`docs/DOCKER_DEPLOYMENT.md`](docs/DOCKER_DEPLOYMENT.md)
 
-## �🚀 Deployment Considerations
+## 🚀 Deployment Considerations
 
 ### Pre-deployment Checklist
 
