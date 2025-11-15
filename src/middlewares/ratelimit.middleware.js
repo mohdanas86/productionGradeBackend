@@ -33,7 +33,7 @@ export const authRateLimit = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-// file upload rate  limit (20 requests per 15 minutes)
+// file upload rate limit (10 requests per 30 minutes)
 export const fileUploadRateLimit = rateLimit({
   windowMs: FILEUPLOADRATELIMIT_30MIN, // 30 minutes
   max: 10, // limit each IP to 10 requests per windowMs
