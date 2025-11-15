@@ -274,7 +274,10 @@ const updateUserDetails = asyncHandler(async (req, res, next) => {
   // Check if email is being updated and if it's unique
   if (email) {
     const existingUser = await User.findOne({ email });
-    if (existingUser && existingUser._id.toString() !== req.user._id.toString()) {
+    if (
+      existingUser &&
+      existingUser._id.toString() !== req.user._id.toString()
+    ) {
       throw new ApiError(409, 'Email already exists');
     }
   }
